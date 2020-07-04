@@ -8,6 +8,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,12 +37,11 @@ public class Account {
     @Transient
     private String no;
 
-    @ElementCollection
-    @CollectionTable(name = "account_address", joinColumns = @JoinColumn(name = "account_id"))
+    @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "street", column = @Column(name = "home_street"))
     })
-    private Set<Address> addresses;
+    private Address addresses;
 
     public Long getId() {
         return id;
