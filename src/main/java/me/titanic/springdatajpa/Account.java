@@ -1,19 +1,20 @@
 package me.titanic.springdatajpa;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.AttributeAccessor;
 
 @Entity
 public class Account {
@@ -35,11 +36,12 @@ public class Account {
     @Transient
     private String no;
 
-    @Embedded
+    @ElementCollection
+    @CollectionTable(name = "account_address", joinColumns = @JoinColumn(name = "account_id"))
     @AttributeOverrides({
         @AttributeOverride(name = "street", column = @Column(name = "home_street"))
     })
-    private Address address;
+    private Set<Address> addresses;
 
     public Long getId() {
         return id;
