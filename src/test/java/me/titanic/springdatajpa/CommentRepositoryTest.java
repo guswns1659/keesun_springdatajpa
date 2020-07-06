@@ -12,7 +12,7 @@ public class CommentRepositoryTest {
 
     @Test
     public void crud() {
-        commentRepository.save(null);
+        commentRepository.save(new Comment());
     }
 }
 

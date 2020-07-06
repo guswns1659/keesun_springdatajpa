@@ -17,6 +17,16 @@ public class Comment {
     @ManyToOne
     private Post post;
 
+    private int likeCount;
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int like) {
+        this.likeCount = like;
+    }
+
     public Long getId() {
         return id;
     }
