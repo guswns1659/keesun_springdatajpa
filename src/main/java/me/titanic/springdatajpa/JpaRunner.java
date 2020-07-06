@@ -17,6 +17,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javafx.geometry.Pos;
+
 @Component
 @Transactional
 public class JpaRunner implements ApplicationRunner {
@@ -28,12 +30,9 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Post> query = builder.createQuery(Post.class);
-        Root<Post> root = query.from(Post.class);
-        query.select(root);
+        List<Post> posts = entityManager.createNativeQuery("Select * from Post", Post.class)
+            .getResultList();
 
-        List<Post> posts = entityManager.createQuery(query).getResultList();
         posts.forEach(System.out::println);
     }
 }
