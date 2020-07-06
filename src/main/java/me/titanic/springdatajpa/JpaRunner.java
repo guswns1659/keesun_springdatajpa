@@ -22,18 +22,26 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        logger.info("JpaRunner 실행");
-        Account account = new Account();
-        account.setUsername("titanic");
-        account.setPassword("hibernate");
-
-        Study study = new Study();
-        study.setName("Spring data jpa");
-
-        account.addStudy(study);
+        // Post post = new Post();
+        // post.setTitle("Spring Data Jpa 언제 보냐..");
+        //
+        // Comment comment = new Comment();
+        // comment.setComment("빨리 보고 싶어요");
+        // post.addComment(comment);
+        //
+        // Comment comment1 = new Comment();
+        // comment1.setComment("곧 보여드릴게요");
+        // post.addComment(comment1);
 
         Session session = entityManager.unwrap(Session.class);
-        session.save(account);
-        session.save(study);
+        // session.save(post);
+        Post post = session.get(Post.class, 1L);
+        logger.info("==================");
+        logger.info(post.getTitle());
+
+        post.getComments().forEach(c -> {
+            logger.info("==============");
+            logger.info(c.getComment());
+        });
     }
 }
