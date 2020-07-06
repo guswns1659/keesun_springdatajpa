@@ -1,7 +1,13 @@
 package me.titanic.springdatajpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -22,26 +28,12 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // Post post = new Post();
-        // post.setTitle("Spring Data Jpa 언제 보냐..");
-        //
-        // Comment comment = new Comment();
-        // comment.setComment("빨리 보고 싶어요");
-        // post.addComment(comment);
-        //
-        // Comment comment1 = new Comment();
-        // comment1.setComment("곧 보여드릴게요");
-        // post.addComment(comment1);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Post> query = builder.createQuery(Post.class);
+        Root<Post> root = query.from(Post.class);
+        query.select(root);
 
-        Session session = entityManager.unwrap(Session.class);
-        // session.save(post);
-        Post post = session.get(Post.class, 1L);
-        logger.info("==================");
-        logger.info(post.getTitle());
-
-        post.getComments().forEach(c -> {
-            logger.info("==============");
-            logger.info(c.getComment());
-        });
+        List<Post> posts = entityManager.createQuery(query).getResultList();
+        posts.forEach(System.out::println);
     }
 }
