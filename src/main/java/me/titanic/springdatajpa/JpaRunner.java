@@ -19,6 +19,14 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        postRepository.findAll().forEach(System.out::println);
+        Post post = new Post();
+        post.setTitle("spring");
+
+        Comment comment = new Comment();
+        comment.setComment("hello");
+
+        post.addComment(comment);
+
+        postRepository.save(post);
     }
 }
