@@ -1,14 +1,13 @@
 package me.titanic.springdatajpa;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CommentRepository extends MyRepository<Comment, Long> {
 
-    List<Comment> findByCommentContains(String keyword);
+    Stream<Comment> findByCommentContainsIgnoreCase(String keyword, Pageable pageable);
 
-    Page<Comment> findByLikeCountGreaterThanAndPost(int likeCount, Post post, Pageable pageable);
-
+    Optional<Comment> findFirstByPostTitle(String postTitle);
 }

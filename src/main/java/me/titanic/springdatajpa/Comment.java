@@ -1,5 +1,6 @@
 package me.titanic.springdatajpa;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,10 +15,10 @@ public class Comment {
 
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Post post;
 
-    private int likeCount;
+    private int likeCount = 0;
 
     public int getLikeCount() {
         return likeCount;
